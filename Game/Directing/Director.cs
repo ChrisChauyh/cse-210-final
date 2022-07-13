@@ -25,7 +25,7 @@ namespace csefinal.Game.Directing
             this.videoService = videoService;
         }
         //start the game
-        public void StartGame(Cast cast, Script script)
+        public void StartGame()
         {
             videoService.OpenWindow();
             while (!WindowShouldClose())

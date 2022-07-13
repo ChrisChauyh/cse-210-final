@@ -17,20 +17,16 @@ namespace csefinal
         /// <param name="args">The given arguments.</param>
         static void Main(string[] args)
         {
-            // create the cast
-            Cast cast = new Cast();
-            cast.AddActor("cubes", new Cubes());
 
             // create the services
             VideoService videoService = new VideoService();
            
             // create the script
             Script script = new Script();
-            script.AddAction("update", new HandleCollisionsAction());
 
             // start the game
             Director director = new Director(videoService);
-            director.StartGame(cast, script);
+            director.StartGame();
         }
     }
 }

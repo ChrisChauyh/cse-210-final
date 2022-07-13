@@ -17,13 +17,15 @@ namespace csefinal.Game
         public static int FRAME_RATE = 60;
         //screen title
         public static string CAPTION = "Douge";
-        public float[] heights = new float[Constants.MAX_COLUMNS];
-        public float[] position_x = new float[Constants.MAX_COLUMNS];
-        public float[] position_z = new float[Constants.MAX_COLUMNS];
-        public Vector3[] positions = new Vector3[Constants.MAX_COLUMNS];
-        public Raylib_cs.Color[] colors = new Raylib_cs.Color[Constants.MAX_COLUMNS];
+        public float[] heights{ get; set; } = new float[Constants.MAX_COLUMNS];
+        public float[] position_x{ get; set; } = new float[Constants.MAX_COLUMNS];
+        public float[] position_z{ get; set; } = new float[Constants.MAX_COLUMNS];
+        public Vector3[] positions{ get; set; } = new Vector3[Constants.MAX_COLUMNS];
+        public Raylib_cs.Color[] colors{ get; set; } = new Raylib_cs.Color[Constants.MAX_COLUMNS];
+        
+
         //timer
-        public int framesCounter = 480;
+        public int framesCounter{ get; set; } = 480;
         //collision checker
         public bool collision = false;
 

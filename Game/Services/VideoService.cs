@@ -5,15 +5,18 @@ using static Raylib_cs.CameraProjection;
 using static Raylib_cs.CameraMode;
 using static Raylib_cs.Color;
 using csefinal.Game.Casting;
-
+using csefinal.Game.Scripting;
 
 namespace csefinal.Game.Services
 {
-    public class VideoService
+    public class VideoService 
     {
-        Camera3D camera = new Camera3D();
-        Constants constants = new Constants();
+        public Camera3D camera = new Camera3D();
+        public Constants constants = new Constants();
         Point point = new Point();
+        Cubes cubes = new Cubes();
+
+
         public void OpenWindow()
         {
             Raylib.InitWindow(Constants.MAX_X, Constants.MAX_Y, Constants.CAPTION);
@@ -27,7 +30,7 @@ namespace csefinal.Game.Services
             Raylib.SetTargetFPS(Constants.FRAME_RATE);
         }
 
-        // Main game loop
+        // Open game screem (1 frame)
         public void Mainloop()
         {
             // Update camera
@@ -45,17 +48,9 @@ namespace csefinal.Game.Services
             DrawCube(new Vector3(0.0f, 2.5f, -16.0f), 32.0f, 20.0f, 1.0f, RED);      // Draw a Color.Red wall
             
             // Draw some cubes around
-            for (int i = 0; i < Constants.MAX_COLUMNS; i++)
-            {
-                if (GetTime() > 6) // Get elapsed time in seconds since InitWindow() 
-                {
-                    DrawCube(constants.positions[i], 2.0f, constants.heights[i], 2.0f, constants.colors[i]);
-                    DrawCubeWires(constants.positions[i], 2.0f, constants.heights[i], 2.0f, MAROON);
-                }
-            }
+            cubes.createcubes();
+
             EndMode3D();
-
-
 
             DrawText("Next random cubes will appear in:", Constants.MAX_X / 2 - 170, Constants.MAX_Y / 2 - 130, 20, BLACK);
             DrawText($"{constants.framesCounter / 60 - 2}", Constants.MAX_X / 2 - 40, Constants.MAX_Y / 2 - 100, 80, BLACK);
@@ -77,22 +72,13 @@ namespace csefinal.Game.Services
                 if (constants.framesCounter == 120)
                 {
                     constants.framesCounter = 480;
-                    for (int i = 0; i < Constants.MAX_COLUMNS; i++)
-                    {
-                        constants.heights[i] = (float)GetRandomValue(1, 12);
-                        constants.position_x[i] = (float)GetRandomValue(-15, 15);
-                        constants.position_z[i] = (float)GetRandomValue(-15, 15);
-                        constants.positions[i] = new Vector3(constants.position_x[i], constants.heights[i] / 2, constants.position_z[i]);
-                        constants.colors[i] = new Raylib_cs.Color(GetRandomValue(20, 255), GetRandomValue(10, 55), 30, 255);
-
-                    }
+                cubes.generatecubepositions();
                 }
-
-                for (int i = 0; i < Constants.MAX_COLUMNS; i++)
+                 for (int i = 0; i < Constants.MAX_COLUMNS; i++)
                 {
                     Vector3 playerPosition = new Vector3(camera.position.X, 0.5f, camera.position.Z);
                     Vector3 playerSize = new Vector3(1.0f, 2.0f, 1.0f);
-                    Vector3 enemyBoxPos = new Vector3(constants.position_x[i], 0.5f, constants.position_z[i]);
+                    Vector3 enemyBoxPos = new Vector3(cubes.position_x[i], 0.5f, cubes.position_z[i]);
                     Vector3 enemyBoxSize = new Vector3(1.0f, 2.0f, 2.0f);
 
                     // Check collisions player vs enemy-boxs

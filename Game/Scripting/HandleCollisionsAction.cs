@@ -1,16 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Data;
 using csefinal.Game.Casting;
+using Raylib_cs;
+using System.Numerics;
+using static Raylib_cs.Raylib;
+using static Raylib_cs.Color;
 using csefinal.Game.Services;
 
 
 namespace csefinal.Game.Scripting
 {
 
-    public class HandleCollisionsAction : Action
+    public class HandleCollisionsAction : VideoService
     {
-        private bool isGameOver = false;
 
         /// <summary>
         /// Constructs a new instance of HandleCollisionsAction.
@@ -19,78 +19,38 @@ namespace csefinal.Game.Scripting
         {
         }
 
-        /// <inheritdoc/>
-        public void Execute(Cast cast, Script script)
+        private void HandleGameOver()
         {
-            if (isGameOver == false)
-            {
-                HandleFoodCollisions(cast);
-                HandleSegmentCollisions(cast);
-                HandleGameOver(cast);
-            }
-        }
+            for (int i = 0; i < Constants.MAX_COLUMNS; i++)
+                {
+                    Vector3 playerPosition = new Vector3(camera.position.X, 0.5f, camera.position.Z);
+                    Vector3 playerSize = new Vector3(1.0f, 2.0f, 1.0f);
+                    Vector3 enemyBoxPos = new Vector3(constants.position_x[i], 0.5f, constants.position_z[i]);
+                    Vector3 enemyBoxSize = new Vector3(1.0f, 2.0f, 2.0f);
 
-        /// <summary>
-        /// Updates the score nd moves the food if the snake collides with it.
-        /// </summary>
-        /// <param name="cast">The cast of actors.</param>
-        private void HandleFoodCollisions(Cast cast)
-        {
-          //  Snake snake = (Snake)cast.GetFirstActor("snake");
-            Cubes food = (Cubes)cast.GetFirstActor("food");
-            
+                    // Check collisions player vs enemy-boxs
+                    BoundingBox box1 = new BoundingBox(
+                        playerPosition - (playerSize / 2),
+                        playerPosition + (playerSize / 2)
+                    );
+                    BoundingBox box2 = new BoundingBox(
+                        enemyBoxPos - (enemyBoxSize / 2),
+                        enemyBoxPos + (enemyBoxSize / 2)
+                    );
+                    // Check collisions player vs enemy-boxs
+                    if (CheckCollisionBoxes(box1, box2))
+                    {
+                        constants.collision = true;
+                    }
 
-          //  if (snake.GetHead().GetPosition().Equals(food.GetPosition()))
-         //   {
-          //      int points = food.GetPoints();
-         //       snake.GrowTail(points);
-         //       score.AddPoints(points);
-         //       food.Reset();
-         //   }
-        }
-
-        /// <summary>
-        /// Sets the game over flag if the snake collides with one of its segments.
-        /// </summary>
-        /// <param name="cast">The cast of actors.</param>
-        private void HandleSegmentCollisions(Cast cast)
-        {
-           // Snake snake = (Snake)cast.GetFirstActor("snake");
-          //  Actor head = snake.GetHead();
-          //  List<Actor> body = snake.GetBody();
-
-         //   foreach (Actor segment in body)
-         //   {
-           //     if (segment.GetPosition().Equals(head.GetPosition()))
-            //    {
-           //         isGameOver = true;
-           //     }
-         //   }
-        }
-
-        private void HandleGameOver(Cast cast)
-        {
-            if (isGameOver == true)
-            {
-              //  Snake snake = (Snake)cast.GetFirstActor("snake");
-              //  List<Actor> segments = snake.GetSegments();
-                //Food food = (Food)cast.GetFirstActor("food");
-
-                // create a "game over" message
-                int x = Constants.MAX_X / 2;
-                int y = Constants.MAX_Y / 2;
-
-                Actor message = new Actor();
-                message.SetText("Game Over!");
-                cast.AddActor("cube", message);
-
-                // make everything white
-              //  foreach (Actor segment in segments)
-            //    {
-                    //segment.SetColor(Constants.WHITE);
-            //    }
-                //food.SetColor(Constants.WHITE);
-            }
+                    if (constants.collision)
+                    {
+                        Color transparent = new Color(230, 41, 55, 40);
+                        DrawRectangle(0, 0, Constants.MAX_X, Constants.MAX_Y, transparent);
+                        DrawText("You Lost!!!", Constants.MAX_X / 2 - 100, Constants.MAX_Y / 2 - 140, 80, DARKBLUE);
+                        DrawText("PRESS ESC to exit game.", Constants.MAX_X / 2 - 150, Constants.MAX_Y / 2, 20, DARKBLUE);
+                    }
+                }
         }
 
     }
