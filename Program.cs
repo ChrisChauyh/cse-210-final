@@ -20,9 +20,6 @@ namespace csefinal
 
             // create the services
             VideoService videoService = new VideoService();
-           
-            // create the script
-            Script script = new Script();
 
             // start the game
             Director director = new Director(videoService);

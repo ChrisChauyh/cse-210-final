@@ -1,14 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Reflection.Metadata;
-using Raylib_cs;
 using System.Numerics;
 using static Raylib_cs.Raylib;
-using static Raylib_cs.CameraProjection;
-using static Raylib_cs.CameraMode;
 using static Raylib_cs.Color;
-using csefinal.Game.Services;
-
 
 namespace csefinal.Game.Casting
 {

@@ -5,7 +5,6 @@ using static Raylib_cs.CameraProjection;
 using static Raylib_cs.CameraMode;
 using static Raylib_cs.Color;
 using csefinal.Game.Casting;
-using csefinal.Game.Scripting;
 
 namespace csefinal.Game.Services
 {
@@ -59,9 +58,9 @@ namespace csefinal.Game.Services
             DrawRectangleLines(10, 10, 220, 100, BLUE);
 
             DrawText("Rules:", 20, 20, 10, BLACK);
-            DrawText("- Move with keys: W, A, S, D", 40, 40, 10, DARKGRAY);
-            DrawText("- Game rule: Don't walk into cubes!", 40, 60, 10, DARKGRAY);
-            DrawText("- Mouse move to look around", 40, 80, 10, DARKGRAY);
+            DrawText("- Move with keys: W, A, S, D", 40, 40, 10, BLACK);
+            DrawText("- Game rule: Don't walk into cubes!", 40, 60, 10, BLACK);
+            DrawText("- Mouse move to look around", 40, 80, 10, BLACK);
             DrawText($"Scores: {point.AddPoints(constants.framesCounter)}", 40, 120, 30, BLACK);
 
 

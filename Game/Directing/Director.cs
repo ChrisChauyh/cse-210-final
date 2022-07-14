@@ -1,5 +1,3 @@
-using csefinal.Game.Casting;
-using csefinal.Game.Scripting;
 using csefinal.Game.Services;
 using static Raylib_cs.Raylib;
 

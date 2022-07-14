@@ -1,6 +1,3 @@
-
-
-
 namespace csefinal.Game.Casting
 {
     public class Point
